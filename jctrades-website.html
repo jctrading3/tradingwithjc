@@ -339,6 +339,27 @@
             align-items: center;
         }
 
+        .profile-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 4px solid var(--red);
+            box-shadow: 0 0 50px var(--red-glow), 0 0 100px rgba(255, 0, 0, 0.2);
+            object-fit: cover;
+            animation: profileFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
         .about-text h3 {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
@@ -526,6 +547,11 @@
                 grid-template-columns: 1fr;
             }
 
+            .profile-image {
+                width: 250px;
+                height: 250px;
+            }
+
             .cta-buttons {
                 flex-direction: column;
             }
@@ -566,6 +592,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#trading">Trading</a></li>
                     <li><a href="#youtube">YouTube</a></li>
+                    <li><a href="https://www.instagram.com/jctrades3" target="_blank">Instagram</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -606,28 +633,31 @@
         <section class="about" id="about">
             <h2 class="section-title">ABOUT <span>JC TRADES</span></h2>
             <div class="about-content">
+                <div class="profile-image-container">
+                    <img src="jctrades-profile.jpeg" alt="JC Trades Profile" class="profile-image">
+                </div>
                 <div class="about-text">
                     <h3>Day Trading Futures with Precision</h3>
                     <p>Welcome to JC Trades, where I share my journey as a futures day trader. I focus on reading price action, identifying key levels, and executing high-probability setups in real-time.</p>
                     <p>My channel is dedicated to providing transparent, unfiltered trading content. No fluff, no fake promises—just real trades, real analysis, and real results.</p>
                 </div>
-                <div class="about-features">
-                    <div class="feature">
-                        <h4>⚡ Live Trading Sessions</h4>
-                        <p>Watch me trade the futures market live with detailed commentary and analysis</p>
-                    </div>
-                    <div class="feature">
-                        <h4>📊 Chart Breakdowns</h4>
-                        <p>In-depth technical analysis and price action strategies</p>
-                    </div>
-                    <div class="feature">
-                        <h4>🎯 Risk Management</h4>
-                        <p>Learn proper position sizing and trade management techniques</p>
-                    </div>
-                    <div class="feature">
-                        <h4>💡 Educational Content</h4>
-                        <p>Free education on futures trading fundamentals and advanced concepts</p>
-                    </div>
+            </div>
+            <div class="about-features" style="margin-top: 4rem;">
+                <div class="feature">
+                    <h4>⚡ Live Trading Sessions</h4>
+                    <p>Watch me trade the futures market live with detailed commentary and analysis</p>
+                </div>
+                <div class="feature">
+                    <h4>📊 Chart Breakdowns</h4>
+                    <p>In-depth technical analysis and price action strategies</p>
+                </div>
+                <div class="feature">
+                    <h4>🎯 Risk Management</h4>
+                    <p>Learn proper position sizing and trade management techniques</p>
+                </div>
+                <div class="feature">
+                    <h4>💡 Educational Content</h4>
+                    <p>Free education on futures trading fundamentals and advanced concepts</p>
                 </div>
             </div>
         </section>
@@ -669,15 +699,21 @@
         </section>
 
         <section class="youtube-section" id="youtube">
-            <h2 class="section-title">SUBSCRIBE ON <span>YOUTUBE</span></h2>
+            <h2 class="section-title">FOLLOW ON <span>SOCIAL MEDIA</span></h2>
             <div class="youtube-embed">
                 <p style="font-size: 1.3rem; color: var(--text-gray); margin-bottom: 2rem;">
-                    Join the community and get access to live trading sessions, chart analysis, and educational content
+                    Join the community and get access to live trading sessions, chart analysis, and daily trading updates
                 </p>
-                <a href="https://www.youtube.com/@JCTrades3" target="_blank" class="subscribe-btn">
-                    <span>▶</span>
-                    SUBSCRIBE TO JC TRADES
-                </a>
+                <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://www.youtube.com/@JCTrades3" target="_blank" class="subscribe-btn">
+                        <span>▶</span>
+                        SUBSCRIBE ON YOUTUBE
+                    </a>
+                    <a href="https://www.instagram.com/jctrades3" target="_blank" class="subscribe-btn">
+                        <span>📷</span>
+                        FOLLOW ON INSTAGRAM
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -685,6 +721,7 @@
             <div class="footer-content">
                 <div class="social-links">
                     <a href="https://www.youtube.com/@JCTrades3" target="_blank" title="YouTube">▶</a>
+                    <a href="https://www.instagram.com/jctrades3" target="_blank" title="Instagram">📷</a>
                 </div>
                 <p>&copy; 2024 JC Trades. All rights reserved. | Futures trading involves substantial risk of loss.</p>
                 <p style="margin-top: 1rem; font-size: 0.9rem;">
