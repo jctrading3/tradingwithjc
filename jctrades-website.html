@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JC Trades | Futures Day Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #FF0000;
+            --red-dark: #CC0000;
+            --red-glow: rgba(255, 0, 0, 0.3);
+            --black: #000000;
+            --black-light: #0a0a0a;
+            --black-card: #111111;
+            --gray: #1a1a1a;
+            --gray-light: #2a2a2a;
+            --white: #ffffff;
+            --text-gray: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .background-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header/Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            color: var(--white);
+            text-shadow: 0 0 20px var(--red-glow);
+        }
+
+        .logo span {
+            color: var(--red);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--red);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: 4px;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero h1 .highlight {
+            color: var(--red);
+            text-shadow: 0 0 30px var(--red-glow);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .btn {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+            box-shadow: 0 0 30px var(--red-glow);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--red-dark);
+            box-shadow: 0 0 50px var(--red-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--red);
+        }
+
+        .btn-secondary:hover {
+            background: var(--red);
+            box-shadow: 0 0 30px var(--red-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 4rem 5%;
+            background: var(--black-light);
+            border-top: 1px solid rgba(255, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .stats-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--black-card);
+            border: 1px solid var(--gray-light);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px var(--red-glow);
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 3px;
+        }
+
+        .section-title span {
+            color: var(--red);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-features {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .feature {
+            padding: 1.5rem;
+            background: var(--black-card);
+            border-left: 3px solid var(--red);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            background: var(--gray-light);
+            transform: translateX(10px);
+        }
+
+        .feature h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .feature p {
+            color: var(--text-gray);
+            margin-bottom: 0;
+        }
+
+        /* Trading Focus */
+        .trading-focus {
+            padding: 6rem 5%;
+            background: var(--black-light);
+        }
+
+        .focus-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .focus-card {
+            background: var(--black-card);
+            border: 1px solid var(--gray-light);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .focus-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--red);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .focus-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .focus-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 10px 40px rgba(255, 0, 0, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .focus-icon {
+            font-size: 3rem;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+        }
+
+        .focus-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .focus-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        /* YouTube Section */
+        .youtube-section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .youtube-embed {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .subscribe-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem 3rem;
+            background: var(--red);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px var(--red-glow);
+        }
+
+        .subscribe-btn:hover {
+            background: var(--red-dark);
+            box-shadow: 0 0 50px var(--red-glow);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black-light);
+            border-top: 1px solid rgba(255, 0, 0, 0.2);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--red);
+            transform: translateY(-3px);
+        }
+
+        footer p {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--red);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--red-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+    
+    <div class="content-wrapper">
+        <header>
+            <nav>
+                <div class="logo">JC<span>TRADES</span></div>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#trading">Trading</a></li>
+                    <li><a href="#youtube">YouTube</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>MASTER THE <span class="highlight">FUTURES</span> MARKET</h1>
+                <p class="subtitle">PRECISION TRADING | REAL-TIME ANALYSIS | PROVEN STRATEGIES</p>
+                <div class="cta-buttons">
+                    <a href="https://www.youtube.com/@JCTrades3" target="_blank" class="btn btn-primary">Watch Live Trades</a>
+                    <a href="#about" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Live Trades</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Market Coverage</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Transparency</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Growth Potential</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <h2 class="section-title">ABOUT <span>JC TRADES</span></h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Day Trading Futures with Precision</h3>
+                    <p>Welcome to JC Trades, where I share my journey as a futures day trader. I focus on reading price action, identifying key levels, and executing high-probability setups in real-time.</p>
+                    <p>My channel is dedicated to providing transparent, unfiltered trading content. No fluff, no fake promises—just real trades, real analysis, and real results.</p>
+                </div>
+                <div class="about-features">
+                    <div class="feature">
+                        <h4>⚡ Live Trading Sessions</h4>
+                        <p>Watch me trade the futures market live with detailed commentary and analysis</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📊 Chart Breakdowns</h4>
+                        <p>In-depth technical analysis and price action strategies</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🎯 Risk Management</h4>
+                        <p>Learn proper position sizing and trade management techniques</p>
+                    </div>
+                    <div class="feature">
+                        <h4>💡 Educational Content</h4>
+                        <p>Free education on futures trading fundamentals and advanced concepts</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="trading-focus" id="trading">
+            <h2 class="section-title">TRADING <span>FOCUS</span></h2>
+            <div class="focus-grid">
+                <div class="focus-card">
+                    <div class="focus-icon">📈</div>
+                    <h3>ES Futures</h3>
+                    <p>S&P 500 E-mini futures with focus on high-volume trading sessions and key market levels</p>
+                </div>
+                <div class="focus-card">
+                    <div class="focus-icon">💹</div>
+                    <h3>NQ Futures</h3>
+                    <p>Nasdaq-100 E-mini futures featuring tech-heavy momentum trading opportunities</p>
+                </div>
+                <div class="focus-card">
+                    <div class="focus-icon">⚡</div>
+                    <h3>Scalping Strategies</h3>
+                    <p>Quick entries and exits targeting small price movements with high win rates</p>
+                </div>
+                <div class="focus-card">
+                    <div class="focus-icon">🎯</div>
+                    <h3>Price Action</h3>
+                    <p>Pure chart reading without indicators—support, resistance, and market structure</p>
+                </div>
+                <div class="focus-card">
+                    <div class="focus-icon">🔥</div>
+                    <h3>Momentum Trading</h3>
+                    <p>Capitalizing on strong directional moves during volatile market conditions</p>
+                </div>
+                <div class="focus-card">
+                    <div class="focus-icon">🛡️</div>
+                    <h3>Risk Control</h3>
+                    <p>Strict stop losses and position management to protect capital in all trades</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="youtube-section" id="youtube">
+            <h2 class="section-title">SUBSCRIBE ON <span>YOUTUBE</span></h2>
+            <div class="youtube-embed">
+                <p style="font-size: 1.3rem; color: var(--text-gray); margin-bottom: 2rem;">
+                    Join the community and get access to live trading sessions, chart analysis, and educational content
+                </p>
+                <a href="https://www.youtube.com/@JCTrades3" target="_blank" class="subscribe-btn">
+                    <span>▶</span>
+                    SUBSCRIBE TO JC TRADES
+                </a>
+            </div>
+        </section>
+
+        <footer id="contact">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://www.youtube.com/@JCTrades3" target="_blank" title="YouTube">▶</a>
+                </div>
+                <p>&copy; 2024 JC Trades. All rights reserved. | Futures trading involves substantial risk of loss.</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">
+                    Disclaimer: Trading futures carries a high level of risk and may not be suitable for all investors. 
+                    Past performance is not indicative of future results.
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
